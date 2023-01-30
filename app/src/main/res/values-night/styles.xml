@@ -1,0 +1,9 @@
+<resources>
+<style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccentDark</item>
+    <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+<!--    <item name="android:navigationBarColor">@color/colorPrimaryDark</item>-->
+</style>
+
+</resources>
