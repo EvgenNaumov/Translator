@@ -11,11 +11,8 @@ import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.model.data.DataModel
-import geekbrains.ru.translator.presenter.Presenter
 import geekbrains.ru.translator.view.base.BaseActivity
-import geekbrains.ru.translator.view.base.View
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
-import geekbrains.ru.translator.viewmodel.BaseViewModel
 import geekbrains.ru.translator.viewmodel.MainActivityViewModel
 
 class MainActivity : BaseActivity<AppState>() {

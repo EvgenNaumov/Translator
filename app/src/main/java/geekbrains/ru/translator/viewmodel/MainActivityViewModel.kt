@@ -1,14 +1,12 @@
 package geekbrains.ru.translator.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.model.datasource.DataSourceLocal
 import geekbrains.ru.translator.model.datasource.DataSourceRemote
 import geekbrains.ru.translator.model.repository.RepositoryImplementation
 import geekbrains.ru.translator.view.main.MainInteractor
 import io.reactivex.observers.DisposableObserver
-import java.util.*
 
 class MainActivityViewModel(
     private val interactor: MainInteractor = MainInteractor(
