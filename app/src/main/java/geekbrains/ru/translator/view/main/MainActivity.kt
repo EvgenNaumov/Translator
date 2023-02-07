@@ -1,6 +1,7 @@
 package geekbrains.ru.translator.view.main
 
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -14,10 +15,14 @@ import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.model.data.DataModel
 import geekbrains.ru.translator.view.base.BaseActivity
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
-import geekbrains.ru.translator.viewmodel.MainActivityViewModel
+import geekbrains.ru.translator.viewmodel.BaseViewModel
+import java.lang.IllegalStateException
 import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import geekbrains.ru.translator.viewmodel.MainActivityViewModel as MainActivityViewModel
 
-class MainActivity : BaseActivity<AppState,MainInteractor>() {
+
+class MainActivity : BaseActivity<AppState, MainInteractor>() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -29,31 +34,44 @@ class MainActivity : BaseActivity<AppState,MainInteractor>() {
             }
         }
 
-    private val observer = Observer<AppState>{renderData(it)}
+    private val observer = Observer<AppState> { renderData(it) }
 
-    @Inject
-    internal lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    override val model: MainActivityViewModel by lazy{
-        ViewModelProvider.NewInstanceFactory().create(MainActivityViewModel::class.java)
+    private val fabClickListener = View.OnClickListener {
+        val searchDialogFragment = SearchDialogFragment.newInstance()
+        searchDialogFragment.setOnSearchClickListener(object :
+            SearchDialogFragment.OnSearchClickListener {
+            override fun onClick(searchWord: String) {
+                model.getData(searchWord, true).observe(this@MainActivity, observer)
+            }
+        })
+        searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
     }
+    override lateinit var model: BaseViewModel<AppState>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.searchFab.setOnClickListener {
-            val searchDialogFragment = SearchDialogFragment.newInstance()
-            searchDialogFragment.setOnSearchClickListener(object :
-                SearchDialogFragment.OnSearchClickListener {
-                override fun onClick(searchWord: String) {
-                    model.getData(searchWord, true).observe(this@MainActivity, observer)
-                }
-            })
-            searchDialogFragment.show(supportFragmentManager, BOTTOM_SHEET_FRAGMENT_DIALOG_TAG)
-        }
+        initView()
     }
 
+    private fun initView() {
+        binding.searchFab.setOnClickListener(fabClickListener)
+        binding.mainActivityRecyclerview.layoutManager = LinearLayoutManager(applicationContext)
+        binding.mainActivityRecyclerview.adapter = adapter
+    }
+
+    private fun initViewModel(){
+        if (binding.mainActivityRecyclerview.adapter!=null){
+            throw IllegalStateException("The ViewModel should be initialised first")
+        }
+
+        val viewModel: MainActivityViewModel by viewModel()
+        model = viewModel
+        model.
+
+    }
     override fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Success -> {
@@ -93,7 +111,7 @@ class MainActivity : BaseActivity<AppState,MainInteractor>() {
         showViewError()
         binding.errorTextview.text = error ?: getString(R.string.undefined_error)
         binding.reloadButton.setOnClickListener {
-            model.getData("hi",true).observe(this, observer)
+            model.getData("hi", true).observe(this, observer)
         }
     }
 

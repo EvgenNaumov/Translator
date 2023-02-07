@@ -12,7 +12,7 @@ import geekbrains.ru.translator.viewmodel.BaseViewModel
 
 abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity(){
 
-    abstract val model: BaseViewModel<T>
+    abstract var model: BaseViewModel<T>
 
     protected var isNetworkAvailable: Boolean = false
 

@@ -5,23 +5,20 @@ import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
+import geekbrains.ru.translator.koin.application
+import geekbrains.ru.translator.koin.mainScreen
+import org.koin.core.context.startKoin
 import javax.inject.Inject
 
-class TranslatorApp: Application(), HasAndroidInjector {
+class TranslatorApp: Application() {
 
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
-    override fun androidInjector(): AndroidInjector<Any> {
-        return dispatchingAndroidInjector
-    }
 
     override fun onCreate() {
         super.onCreate()
 
-        DaggerAppComponent.builder()
-            .application(this)
-            .build()
-            .inject(this)
+        startKoin{
+            modules(listOf(application, mainScreen))
+        }
     }
 }
