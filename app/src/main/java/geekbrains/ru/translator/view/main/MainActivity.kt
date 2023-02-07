@@ -7,18 +7,17 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.anikin.aleksandr.simplevocabulary.viewmodel.Interactor
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.model.data.DataModel
-import geekbrains.ru.translator.presenter.Presenter
 import geekbrains.ru.translator.view.base.BaseActivity
-import geekbrains.ru.translator.view.base.View
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
-import geekbrains.ru.translator.viewmodel.BaseViewModel
 import geekbrains.ru.translator.viewmodel.MainActivityViewModel
+import javax.inject.Inject
 
-class MainActivity : BaseActivity<AppState>() {
+class MainActivity : BaseActivity<AppState,MainInteractor>() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -31,6 +30,9 @@ class MainActivity : BaseActivity<AppState>() {
         }
 
     private val observer = Observer<AppState>{renderData(it)}
+
+    @Inject
+    internal lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val model: MainActivityViewModel by lazy{
         ViewModelProvider.NewInstanceFactory().create(MainActivityViewModel::class.java)
