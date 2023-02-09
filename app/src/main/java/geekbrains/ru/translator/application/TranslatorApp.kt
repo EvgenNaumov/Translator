@@ -12,8 +12,6 @@ import javax.inject.Inject
 
 class TranslatorApp: Application() {
 
-
-
     override fun onCreate() {
         super.onCreate()
 

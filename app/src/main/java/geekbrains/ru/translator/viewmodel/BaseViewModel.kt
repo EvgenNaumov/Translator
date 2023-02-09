@@ -6,15 +6,32 @@ import androidx.lifecycle.ViewModel
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.rx.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 abstract class BaseViewModel<T : AppState>(
-    protected val liveDataForViewToObserve: MutableLiveData<T> = MutableLiveData(),
-    protected val compositeDisposable: CompositeDisposable = CompositeDisposable(),
-    protected val shedulerProvider: SchedulerProvider = SchedulerProvider()
-):ViewModel(){
+    protected open val _mutableLiveData: MutableLiveData<T> = MutableLiveData()
+) : ViewModel() {
 
-    open fun getData(word: String, isOnline: Boolean): LiveData<T> = liveDataForViewToObserve
+
+    protected val viewModelCourutinesScope = CoroutineScope(
+        Dispatchers.Main
+                + SupervisorJob()
+                + CoroutineExceptionHandler { _, throwable ->
+            handleError(throwable)
+        }
+    )
+
+    abstract fun handleError(throwable: Throwable)
+
+    abstract fun getData(word: String, isOnline: Boolean)
+
     override fun onCleared() {
-        compositeDisposable.clear()
+        super.onCleared()
+        cancelJob()
+    }
+
+    protected fun cancelJob(){
+        viewModelCourutinesScope.coroutineContext.cancelChildren()
     }
 }

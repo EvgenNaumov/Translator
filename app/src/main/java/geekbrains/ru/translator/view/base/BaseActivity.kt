@@ -9,10 +9,11 @@ import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.utils.network.isOnline
 import geekbrains.ru.translator.utils.ui.AlertDialogFragment
 import geekbrains.ru.translator.viewmodel.BaseViewModel
+import geekbrains.ru.translator.viewmodel.MainActivityViewModel
 
 abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity(){
 
-    abstract var model: BaseViewModel<T>
+    abstract var model: MainActivityViewModel
 
     protected var isNetworkAvailable: Boolean = false
 
