@@ -3,6 +3,9 @@ package geekbrains.ru.translator.utils.ui
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import geekbrains.ru.translator.R
+import geekbrains.ru.translator.db.HistoryEntity
+import geekbrains.ru.translator.model.data.AppState
+import geekbrains.ru.translator.model.data.DataModel
 
 fun getStubAlertDialog(context: Context): AlertDialog {
     return getAlertDialog(context, null, null)
@@ -21,4 +24,29 @@ fun getAlertDialog(context: Context, title: String?, message: String?): AlertDia
     builder.setCancelable(true)
     builder.setPositiveButton(R.string.dialog_button_cancel) { dialog, _ -> dialog.dismiss() }
     return builder.create()
+}
+
+fun mapHistoryEntityToSearchResult(list: List<HistoryEntity>): List<DataModel> {
+    val dataModel= ArrayList<DataModel>()
+    if (!list.isNullOrEmpty()) {
+        for (entity in list) {
+            dataModel.add(DataModel(entity.word, null))
+        }
+    }
+    return dataModel
+}
+
+fun convertDataModelSuccessToEntity(appState: AppState): HistoryEntity? {
+    return when (appState) {
+        is AppState.Success -> {
+            val searchResult = appState.data
+            if (searchResult.isNullOrEmpty() || searchResult[0].text.isNullOrEmpty())
+            {
+                null
+            } else {
+                HistoryEntity(searchResult[0].text!!, null)
+            }
+        }
+        else -> null
+    }
 }
