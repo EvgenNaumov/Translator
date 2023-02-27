@@ -11,6 +11,7 @@ import geekbrains.ru.translator.R
 import geekbrains.ru.translator.databinding.ActivityMainBinding
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.model.data.DataModel
+import geekbrains.ru.translator.utils.convertMeaningsToString
 import geekbrains.ru.translator.utils.network.isOnline
 import geekbrains.ru.translator.view.base.BaseActivity
 import geekbrains.ru.translator.view.main.adapter.MainAdapter
@@ -27,7 +28,14 @@ class MainActivity : BaseActivity<AppState, MainInteractor>() {
     private val onListItemClickListener: MainAdapter.OnListItemClickListener =
         object : MainAdapter.OnListItemClickListener {
             override fun onItemClick(data: DataModel) {
-                Toast.makeText(this@MainActivity, data.text, Toast.LENGTH_SHORT).show()
+                startActivity(
+                    DescriptionActivity.getIntent(
+                        this@MainActivity,
+                        data.text!!,
+                        convertMeaningsToString(data.meanings!!),
+                        data.meanings[0].imageUrl
+                    )
+                )
             }
         }
 
