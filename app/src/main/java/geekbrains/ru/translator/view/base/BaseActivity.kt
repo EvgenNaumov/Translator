@@ -5,6 +5,8 @@ import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import com.anikin.aleksandr.simplevocabulary.viewmodel.Interactor
 import geekbrains.ru.translator.R
+import geekbrains.ru.translator.databinding.ActivityDescriptionBinding
+import geekbrains.ru.translator.databinding.LoadingLayoutBinding
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.utils.network.isOnline
 import geekbrains.ru.translator.utils.ui.AlertDialogFragment
@@ -13,8 +15,9 @@ import geekbrains.ru.translator.viewmodel.MainActivityViewModel
 
 abstract class BaseActivity<T : AppState, I : Interactor<T>> : AppCompatActivity(){
 
-    abstract var model: MainActivityViewModel
 
+    private lateinit var binding: LoadingLayoutBinding
+    abstract var model: MainActivityViewModel
     protected var isNetworkAvailable: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
