@@ -1,11 +1,10 @@
-package geekbrains.ru.translator.view.main.adapter
+package geekbrains.ru.translator.view.history
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import geekbrains.ru.translator.R
 import geekbrains.ru.translator.model.data.DataModel
 import kotlinx.android.synthetic.main.activity_history_recycler_view_item.view.*

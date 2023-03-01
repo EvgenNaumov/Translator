@@ -1,12 +1,13 @@
-package geekbrains.ru.translator.viewmodel
+package geekbrains.ru.translator.view.history
 
 import androidx.lifecycle.LiveData
 import geekbrains.ru.translator.db.HistoryInteractor
 import geekbrains.ru.translator.model.data.AppState
 import geekbrains.ru.translator.utils.parseLocalSearchResults
+import geekbrains.ru.translator.viewmodel.BaseViewModel
 import kotlinx.coroutines.launch
 
-class HistoryViewModel(private val interactor: HistoryInteractor) :BaseViewModel<AppState>(){
+class HistoryViewModel(private val interactor: HistoryInteractor) : BaseViewModel<AppState>(){
 
     private val liveDataForViewToObserve: LiveData<AppState> = _mutableLiveData
     fun subscribe(): LiveData<AppState> {

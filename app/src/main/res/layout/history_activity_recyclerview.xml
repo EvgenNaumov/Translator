@@ -16,5 +16,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:layout_height="match_parent"/>
     </FrameLayout>
+
     <include layout="@layout/loading_layout"/>
+    <include layout = "@layout/error_layout"/>
 </FrameLayout>

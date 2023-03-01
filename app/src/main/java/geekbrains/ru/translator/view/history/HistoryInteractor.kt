@@ -1,4 +1,4 @@
-package geekbrains.ru.translator.history
+package geekbrains.ru.translator.view.history
 
 import com.anikin.aleksandr.simplevocabulary.viewmodel.Interactor
 import geekbrains.ru.translator.model.data.AppState

@@ -1,4 +1,4 @@
-package geekbrains.ru.translator.model.datasource
+package geekbrains.ru.translator.model.data.api
 
 import okhttp3.Interceptor
 import okhttp3.Response
